@@ -24,9 +24,14 @@ Supabase (PostgreSQL + Auth + RLS) · React + Vite + TypeScript + Tailwind.
 | Redéployer | `npm run build && npx vercel deploy --prod --yes` |
 | Dépôt git | Initialisé et commité en local. **Pas encore poussé sur GitHub** |
 
-Le MCP Vercel ne convient pas pour déployer ce projet : il exige de transmettre
-le contenu de tous les fichiers dans l'appel, et 110 Ko de sources ne passent
-pas. Utiliser le CLI, qui lit le dossier depuis le disque.
+**Ne pas utiliser `deploy_to_vercel` (MCP) sur ce projet** : il exige de
+transmettre le contenu de chaque fichier dans l'appel, et 110 Ko de sources ne
+passent pas — le résultat est un arbre tronqué et un build cassé. Le CLI lit le
+dossier depuis le disque, sans cette limite.
+
+Une fois le dépôt poussé sur GitHub, préférer `create_git_project` (MCP Vercel) :
+il lie le projet au dépôt, et Vercel redéploie alors **automatiquement à chaque
+push**. Plus aucune commande de déploiement à lancer.
 
 ## Règles de travail sur ce projet
 
