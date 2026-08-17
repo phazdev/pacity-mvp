@@ -211,19 +211,30 @@ image, surtout sur mobile.
 > au départ, qui obligeait à agrandir 2,2× et rendait la bannière floue).
 > Toutes les sources font désormais au moins 960 px de large.
 
-### Dépôt git ✅ — non poussé
+### Dépôt GitHub et déploiement continu ✅
 
-Dépôt initialisé, premier commit prêt (66 fichiers). `.env.local`,
+**https://github.com/phazdev/pacity-mvp** (public). `.env.local`,
 `.env.production` et `.vercel` sont exclus ; `.env.example` est suivi
-volontairement.
+volontairement, il documente les variables attendues.
 
-**Pas encore poussé sur GitHub** : ni `gh`, ni clé SSH, ni Homebrew sur la
-machine, et le connecteur GitHub n'expose pas d'outils dans la session.
+Le projet Vercel est lié au dépôt : **tout `git push` sur `main` déclenche un
+déploiement en production**. Vérifié — le commit `e38dfee` a produit un build
+`READY` portant `githubDeployment: 1`.
+
+Chemin parcouru, pour mémoire : le connecteur GitHub de claude.ai n'expose
+aucun outil dans Claude Code (contrairement à Supabase et Vercel, dont les
+outils `mcp__claude_ai_*` fonctionnent sans CLI local). La voie qui marche est
+locale : clé SSH `ed25519` pour git, puis `gh` via Homebrew. Les deux sont
+configurés au niveau de la machine — rien à refaire sur les projets suivants.
+
+Côté Vercel, la liaison a demandé deux autorisations distinctes : une *Login
+Connection* GitHub sur le compte, puis l'installation de l'app GitHub. Le MCP
+`create_git_project` refuse de réutiliser un projet existant (409) — c'est
+`npx vercel git connect` qui fait le travail.
 
 ### Reste à faire
 
 - [ ] Valider le responsive sur un appareil réel
-- [ ] Pousser le dépôt sur GitHub
 
 ## Phase 3 — Livrables Discovery & Upsell ⬜
 

@@ -20,18 +20,18 @@ Supabase (PostgreSQL + Auth + RLS) · React + Vite + TypeScript + Tailwind.
 | | |
 | :--- | :--- |
 | Supabase | `vujzhlylcwpnqpidjfyd`, piloté via le MCP Supabase du compte |
+| Dépôt | https://github.com/phazdev/pacity-mvp (public) |
 | En ligne | https://pacity-mvp.vercel.app (team Vercel PHAZDEV) |
-| Redéployer | `npm run build && npx vercel deploy --prod --yes` |
-| Dépôt git | Initialisé et commité en local. **Pas encore poussé sur GitHub** |
+| Déployer | **`git push` sur `main`** — Vercel construit et publie tout seul |
 
-**Ne pas utiliser `deploy_to_vercel` (MCP) sur ce projet** : il exige de
+Le projet Vercel est lié au dépôt GitHub : **il n'y a plus de commande de
+déploiement à lancer**. Pour forcer un déploiement hors commit, le CLI reste
+disponible : `npm run build && npx vercel deploy --prod --yes`.
+
+**Ne jamais utiliser `deploy_to_vercel` (MCP) sur ce projet** : il exige de
 transmettre le contenu de chaque fichier dans l'appel, et 110 Ko de sources ne
-passent pas — le résultat est un arbre tronqué et un build cassé. Le CLI lit le
-dossier depuis le disque, sans cette limite.
-
-Une fois le dépôt poussé sur GitHub, préférer `create_git_project` (MCP Vercel) :
-il lie le projet au dépôt, et Vercel redéploie alors **automatiquement à chaque
-push**. Plus aucune commande de déploiement à lancer.
+passent pas — le résultat est un arbre tronqué et un build cassé. Trois
+déploiements en `ERROR` dans l'historique viennent de là.
 
 ## Règles de travail sur ce projet
 
