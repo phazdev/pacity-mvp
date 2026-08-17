@@ -13,7 +13,7 @@ le projet sans rien reconstruire.
 | :--- | :--- |
 | 1 — Base de données | ✅ **Terminée et vérifiée** (18 tests passés) |
 | 2 — Application React | ✅ **Fonctionnelle**, parcours vérifiés en navigateur |
-| 3 — Livrables Discovery & Upsell | ⬜ À faire |
+| 3 — Livrables Discovery & Upsell | ✅ **Terminée** |
 
 ---
 
@@ -236,21 +236,33 @@ Connection* GitHub sur le compte, puis l'installation de l'app GitHub. Le MCP
 
 - [ ] Valider le responsive sur un appareil réel
 
-## Phase 3 — Livrables Discovery & Upsell ⬜
+## Phase 3 — Livrables Discovery & Upsell ✅
 
-20 % de la note du cas. Un artifact web partageable regroupant :
+20 % de la note du cas. Livrés sous deux formes : le Markdown fait foi dans le
+dépôt, la page web sert à la présentation.
 
-- [ ] Roadmap projet
-- [ ] Justification de la stack technique
-- [ ] Schéma de données commenté
-- [ ] Kickoff deck
-- [ ] Pistes d'upsell chiffrées
+| Livrable | Fichier |
+| :--- | :--- |
+| Kickoff (hybride) | [`KICKOFF.md`](KICKOFF.md) |
+| Justification de la stack | [`STACK.md`](STACK.md) |
+| Roadmap projet | [`ROADMAP.md`](ROADMAP.md) |
+| Pistes d'upsell chiffrées | [`UPSELL.md`](UPSELL.md) |
+| Page web partageable | `dossier-pacity.html` → artifact publié |
 
-**Pistes d'upsell identifiées en cours de build** — l'annulation self-service (le
-gérant est aujourd'hui un goulot d'étranglement, friction assumée du MVP), les
-réservations récurrentes hebdomadaires, le vrai paiement Stripe (l'architecture est
-déjà prête, ce qui rend le devis crédible), les rapports d'occupation par salle, le
-check-in par QR code, les notifications de rappel.
+Le schéma de données commenté n'a pas fait l'objet d'un document dédié : il est
+déjà couvert par [`ARCHITECTURE.md`](ARCHITECTURE.md), qui documente les
+invariants et la référence des RPC, et par les migrations elles-mêmes, toutes
+commentées.
+
+**Parti pris du kickoff** : structure de lancement (problème, compréhension,
+périmètre, risques, suite) mais nourrie de ce qui a réellement été construit,
+avec la démonstration en ligne comme preuve — plutôt qu'un document d'intention
+sur un produit déjà livré.
+
+**Parti pris des chiffres d'upsell** : ils s'appuient sur la grille tarifaire
+réelle du projet, mais les volumes sont des hypothèses explicitement posées.
+Pacity n'a aucune donnée d'usage — c'est justement l'objet du chantier
+« rapports d'occupation ». Annoncer des prévisions aurait été malhonnête.
 
 ---
 

@@ -1,0 +1,807 @@
+<title>Dossier Pacity</title>
+
+<style>
+  /* ============================================================
+     Dossier Pacity — direction « plan technique ».
+     Fond papier froid, encre ardoise, accent vert pétrole.
+     Le terracotta du produit n'apparaît qu'en rappel ponctuel.
+     ============================================================ */
+
+  :root {
+    color-scheme: light dark;
+
+    --paper:       #eef1f0;
+    --surface:     #ffffff;
+    --surface-sub: #e6eae9;
+
+    --ink:      #131e1c;
+    --ink-soft: #4d5b58;
+    --ink-mute: #7b8a86;
+
+    --rule:        #d3dbd9;
+    --rule-strong: #b6c2bf;
+
+    --accent:      #0e6b5e;
+    --accent-soft: #dceae7;
+    --accent-line: #a8ccc5;
+
+    --warm:      #b8542f;
+    --warm-soft: #f6e6df;
+    --amber:     #8a6414;
+    --amber-soft:#f5ecd8;
+
+    --shadow: 0 1px 2px rgba(19, 30, 28, .05), 0 8px 24px -16px rgba(19, 30, 28, .25);
+
+    --display: "Futura", "Avenir Next", "Century Gothic", ui-sans-serif, system-ui, sans-serif;
+    --body: "Charter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono: "SF Mono", "Menlo", "Consolas", ui-monospace, monospace;
+
+    --measure: 66ch;
+    --gutter: clamp(1.25rem, 5vw, 4rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:       #0e1614;
+      --surface:     #16201e;
+      --surface-sub: #1d2926;
+
+      --ink:      #e7edeb;
+      --ink-soft: #a9b8b4;
+      --ink-mute: #7d8d89;
+
+      --rule:        #27332f;
+      --rule-strong: #3a4a45;
+
+      --accent:      #59c4b0;
+      --accent-soft: #16302c;
+      --accent-line: #2c5750;
+
+      --warm:      #e08d68;
+      --warm-soft: #33211a;
+      --amber:     #d1a548;
+      --amber-soft:#302713;
+
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:       #0e1614;
+    --surface:     #16201e;
+    --surface-sub: #1d2926;
+
+    --ink:      #e7edeb;
+    --ink-soft: #a9b8b4;
+    --ink-mute: #7d8d89;
+
+    --rule:        #27332f;
+    --rule-strong: #3a4a45;
+
+    --accent:      #59c4b0;
+    --accent-soft: #16302c;
+    --accent-line: #2c5750;
+
+    --warm:      #e08d68;
+    --warm-soft: #33211a;
+    --amber:     #d1a548;
+    --amber-soft:#302713;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 0 var(--gutter) 6rem;
+  }
+
+  /* ---------- Typographie ---------- */
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+
+  h1 { font-size: clamp(2.1rem, 5.5vw, 3.4rem); line-height: 1.05; letter-spacing: -0.03em; }
+  h2 { font-size: clamp(1.4rem, 3vw, 1.85rem); line-height: 1.15; }
+  h3 { font-size: 1.075rem; line-height: 1.3; letter-spacing: 0; }
+
+  p { margin: 0; max-width: var(--measure); }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .lede { font-size: 1.175rem; color: var(--ink-soft); }
+  .small { font-size: .9rem; color: var(--ink-soft); }
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  /* ---------- En-tête ---------- */
+
+  header.masthead {
+    border-bottom: 1px solid var(--rule-strong);
+    padding: clamp(3rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .identity { display: flex; align-items: center; gap: .75rem; }
+  .mark {
+    width: 2rem; height: 2rem;
+    display: grid; place-items: center;
+    background: var(--accent); color: var(--paper);
+    font-family: var(--display); font-weight: 700; font-size: .95rem;
+  }
+  .identity span { font-family: var(--display); font-weight: 600; letter-spacing: .02em; }
+
+  .masthead-links { display: flex; flex-wrap: wrap; gap: .625rem; }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .4rem .75rem;
+    border: 1px solid var(--rule-strong);
+    background: var(--surface);
+    font-family: var(--mono); font-size: .78rem;
+    color: var(--ink-soft); text-decoration: none;
+  }
+  a.chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip.live::before {
+    content: ""; width: .45rem; height: .45rem;
+    background: var(--accent); border-radius: 50%;
+  }
+
+  /* ---------- Bandeau d'occupation (motif structurant) ---------- */
+
+  .occupancy {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 2px;
+    height: .5rem;
+    margin-top: .5rem;
+  }
+  .occupancy i { background: var(--rule); display: block; }
+  .occupancy i.busy { background: var(--accent); }
+  .occupancy i.warm { background: var(--warm); }
+
+  /* ---------- Sections ---------- */
+
+  section { padding-top: clamp(3rem, 7vw, 4.5rem); }
+
+  .sec-head {
+    display: flex; flex-direction: column; gap: .5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 2rem;
+  }
+
+  .stack { display: flex; flex-direction: column; gap: 1.125rem; }
+  .stack-lg { display: flex; flex-direction: column; gap: 2rem; }
+
+  /* ---------- Cartes ---------- */
+
+  .grid-2 { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 1.25rem 1.375rem;
+    display: flex; flex-direction: column; gap: .5rem;
+  }
+  .card h3 { color: var(--ink); }
+  .card p { font-size: .95rem; color: var(--ink-soft); }
+
+  .card.flag { border-left: 3px solid var(--accent); }
+  .card.flag-warm { border-left: 3px solid var(--warm); }
+
+  /* ---------- Garanties ---------- */
+
+  .guarantee {
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    gap: 0 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .guarantee:last-child { border-bottom: 0; }
+  .guarantee .g-mark {
+    font-family: var(--mono); font-size: .78rem;
+    color: var(--accent); padding-top: .2rem;
+  }
+  .guarantee h3 { margin-bottom: .35rem; }
+  .guarantee p { font-size: .95rem; color: var(--ink-soft); }
+
+  /* ---------- Tableaux ---------- */
+
+  .table-scroll { overflow-x: auto; border: 1px solid var(--rule); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 32rem; font-size: .92rem; }
+  th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th {
+    font-family: var(--mono); font-size: .7rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-mute); font-weight: 400;
+    background: var(--surface-sub);
+  }
+  tr:last-child td { border-bottom: 0; }
+  td.n { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* ---------- Upsell ---------- */
+
+  .item {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: .5rem 1rem;
+    align-items: baseline;
+    padding: 1.375rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .item:last-child { border-bottom: 0; }
+  .item .rank {
+    font-family: var(--display); font-size: 1.35rem; font-weight: 600;
+    color: var(--accent-line);
+  }
+  .item .effort {
+    font-family: var(--mono); font-size: .78rem; color: var(--ink-mute);
+    white-space: nowrap;
+  }
+  .item .detail { grid-column: 2 / -1; display: flex; flex-direction: column; gap: .5rem; }
+  .item .detail p { font-size: .95rem; color: var(--ink-soft); }
+
+  .figure {
+    display: inline-block;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-line);
+    color: var(--accent);
+    padding: .3rem .6rem;
+    font-family: var(--mono); font-size: .8rem;
+  }
+
+  /* ---------- Encadrés ---------- */
+
+  .note {
+    background: var(--surface-sub);
+    border-left: 3px solid var(--rule-strong);
+    padding: 1rem 1.25rem;
+    font-size: .95rem; color: var(--ink-soft);
+  }
+  .note.caution { background: var(--amber-soft); border-left-color: var(--amber); }
+  .note strong { color: var(--ink); }
+
+  /* ---------- Pied ---------- */
+
+  footer {
+    margin-top: clamp(3.5rem, 8vw, 5rem);
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--rule-strong);
+    display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+    justify-content: space-between; align-items: baseline;
+  }
+
+  :where(a, button):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 34rem) {
+    .item { grid-template-columns: 1.75rem 1fr; }
+    .item .effort { grid-column: 2; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="identity">
+      <span class="mark">P</span>
+      <span>Pacity</span>
+    </div>
+
+    <div>
+      <h1>Réserver une salle sans jamais réserver deux fois la même.</h1>
+      <div class="occupancy" aria-hidden="true">
+        <i></i><i></i><i class="busy"></i><i class="busy"></i><i></i><i></i>
+        <i class="warm"></i><i></i><i></i><i class="busy"></i><i></i><i></i>
+        <i></i><i class="busy"></i><i class="busy"></i><i class="busy"></i><i></i><i></i>
+        <i></i><i></i><i class="warm"></i><i></i><i></i><i></i>
+      </div>
+    </div>
+
+    <p class="lede">
+      Dossier de lancement, de cadrage et d'évolution. Le produit décrit ici
+      n'est pas une maquette : il est en ligne, alimenté par une vraie base de
+      données, et vous pouvez l'utiliser en cliquant ci-dessous.
+    </p>
+
+    <div class="masthead-links">
+      <a class="chip live" href="https://pacity-mvp.vercel.app">pacity-mvp.vercel.app</a>
+      <a class="chip" href="https://github.com/phazdev/pacity-mvp">Code source</a>
+      <span class="chip">Coût d'infrastructure — 0 €</span>
+    </div>
+  </header>
+
+  <!-- ============ 1. Problème ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Le point de départ</span>
+      <h2>Trois symptômes, une seule cause</h2>
+    </div>
+
+    <div class="stack">
+      <p>
+        Les réservations vivent aujourd'hui dans Google Calendar, la coordination
+        dans Slack, et la facturation ailleurs encore. Chaque outil détient un
+        morceau de la vérité — <strong>aucun ne fait autorité</strong>.
+      </p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col">Ce que vous constatez</th><th scope="col">Ce qui se passe réellement</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Conflits d'horaires</td><td>Deux personnes posent le même créneau ; rien ne les en empêche</td></tr>
+            <tr><td>Oublis de facturation</td><td>La consommation n'est reliée à aucun compteur</td></tr>
+            <tr><td>Membres laissés de côté</td><td>Slack sert de canal, mais tout le monde n'y est pas</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        L'objectif n'est donc pas d'ajouter un calendrier de plus, mais
+        d'installer un point de vérité unique qui rende ces trois situations
+        structurellement impossibles.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 2. Compréhension ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Ce que nous avons compris</span>
+      <h2>Quatre questions que le brief ne tranchait pas</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card flag">
+        <h3>Pourquoi un Nomad ne peut-il rien réserver ?</h3>
+        <p>
+          Parce qu'il n'a pas de crédits — pas parce qu'une règle le lui interdit.
+          La nuance est décisive : elle rend la vente de packs cohérente. Une
+          seule règle gouverne l'accès, <em>le solde suffit-il ?</em>, au lieu de
+          deux qui se contredisent.
+        </p>
+      </div>
+
+      <div class="card flag">
+        <h3>Qui peut annuler ?</h3>
+        <p>
+          Vous seul, avec remboursement intégral, conformément au brief. Cela
+          crée une friction que nous assumons et documentons plutôt que de la
+          masquer : elle constitue la première piste d'évolution.
+        </p>
+      </div>
+
+      <div class="card flag">
+        <h3>Une salle indisponible, concrètement ?</h3>
+        <p>
+          Travaux, fuite, privatisation : trois situations <strong>datées</strong>,
+          pas un interrupteur définitif. Les fermetures ont donc un début, une fin
+          et un motif — et les réservations touchées sont annulées puis
+          remboursées automatiquement.
+        </p>
+      </div>
+
+      <div class="card flag">
+        <h3>Que voit un membre de l'agenda des autres ?</h3>
+        <p>
+          Qu'un créneau est pris, jamais par qui. Vous, vous voyez les noms.
+          Cette distinction n'était pas dans le brief, mais elle relève de la
+          confidentialité la plus élémentaire dans un espace partagé.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. Livré ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Le périmètre</span>
+      <h2>Ce qui est livré</h2>
+    </div>
+
+    <div class="stack-lg">
+      <div class="grid-2">
+        <div class="card">
+          <span class="eyebrow">Pour vos membres</span>
+          <p>
+            Inscription et connexion · consultation des salles et de leurs
+            caractéristiques · <strong>grille de disponibilités par salle</strong>,
+            où l'occupation s'affiche et où le vide est réservable · choix de la
+            durée et des options réellement proposées dans cette salle · suivi du
+            solde et historique complet · achat de crédits et souscription
+            d'abonnement.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="eyebrow">Pour vous</span>
+          <p>
+            Toutes les réservations de tous les membres, avec leurs noms ·
+            annulation motivée avec remboursement automatique · fermeture datée
+            d'une salle · ajustement manuel du solde d'un membre · déclenchement
+            de la dotation mensuelle.
+          </p>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Hors périmètre, volontairement :</strong> paiement réel,
+        notifications, réservations récurrentes, résiliation d'abonnement,
+        application mobile native. Chacun est chiffré plus bas — ce ne sont pas
+        des oublis, ce sont des choix.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. Garanties ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">La différence avec un tableau partagé</span>
+      <h2>Ce qui garantit que ça marche</h2>
+    </div>
+
+    <div class="stack-lg">
+      <p>
+        Quatre garanties sont inscrites <strong>dans la base de données</strong>,
+        pas dans l'application. Elles sont donc impossibles à contourner — y
+        compris par une erreur de développement future.
+      </p>
+
+      <div>
+        <div class="guarantee">
+          <span class="g-mark">01</span>
+          <div>
+            <h3>Le double-booking est impossible</h3>
+            <p>
+              Pas « vérifié » : impossible. Le moteur de base de données refuse
+              deux réservations qui se chevauchent sur une même salle, de manière
+              atomique. L'approche naïve — vérifier puis enregistrer — laisse une
+              fenêtre de quelques millisecondes pendant laquelle deux membres
+              passent. Cette fenêtre ne se voit jamais en démonstration ; elle se
+              manifeste le jour où deux personnes cliquent en même temps sur la
+              dernière salle libre.
+            </p>
+          </div>
+        </div>
+
+        <div class="guarantee">
+          <span class="g-mark">02</span>
+          <div>
+            <h3>Un solde ne peut pas être faux</h3>
+            <p>
+              Chaque mouvement de crédit est inscrit dans un registre que rien ne
+              peut modifier ni supprimer. Le solde affiché en découle
+              mécaniquement. Une correction s'enregistre comme un mouvement
+              inverse — jamais en réécrivant l'historique.
+            </p>
+          </div>
+        </div>
+
+        <div class="guarantee">
+          <span class="g-mark">03</span>
+          <div>
+            <h3>Une réservation est tout ou rien</h3>
+            <p>
+              Réserver enchaîne six opérations : vérifier la salle, les
+              fermetures, le solde, créer la réservation, enregistrer les options,
+              débiter les crédits. Si l'une échoue, aucune n'est conservée. Pas de
+              membre débité sans réservation, pas de réservation sans ses options.
+            </p>
+          </div>
+        </div>
+
+        <div class="guarantee">
+          <span class="g-mark">04</span>
+          <div>
+            <h3>Un paiement ne crédite jamais deux fois</h3>
+            <p>
+              Y compris si le prestataire de paiement renvoie deux fois la même
+              confirmation — le piège classique des systèmes d'encaissement.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="note">
+        Ces quatre points ont été vérifiés par <strong>18 tests</strong> avant
+        qu'une seule ligne d'interface ne soit écrite. Corriger une faille
+        d'intégrité après coup coûte infiniment plus cher que de la rendre
+        impossible d'emblée.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. Stack ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Choix technique</span>
+      <h2>Pourquoi pas du no-code</h2>
+    </div>
+
+    <div class="stack-lg">
+      <p>
+        Le brief laissait le choix des outils et imposait un budget faible. Le
+        domaine, lui, impose une exigence que la plupart des outils no-code ne
+        savent pas tenir : <strong>deux personnes ne doivent jamais pouvoir
+        réserver la même salle au même moment</strong>. C'est un problème de
+        concurrence, et c'est lui qui a décidé.
+      </p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Alternative</th>
+              <th scope="col">Pourquoi écartée</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Airtable + Softr</td>
+              <td>Une feuille de calcul collaborative : ni transactions, ni verrous. Deux réservations simultanées passent toutes les deux, et le solde dérive dès qu'une opération échoue à mi-chemin.</td>
+            </tr>
+            <tr>
+              <td>Bubble</td>
+              <td>Capable, mais l'atomicité est impossible à prouver, le coût grimpe vite, et le verrouillage propriétaire est total — rien à emporter le jour du départ.</td>
+            </tr>
+            <tr>
+              <td>Firebase</td>
+              <td>Orienté document, sans jointures ni contraintes multi-tables. Le domaine Pacity est relationnel de part en part.</td>
+            </tr>
+            <tr>
+              <td>Next.js</td>
+              <td>Apporte le rendu serveur et le référencement. L'application est entièrement derrière une authentification : aucune page n'a vocation à être indexée. Complexité sans bénéfice.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Retenu : <strong>Supabase</strong> (PostgreSQL, authentification, temps
+        réel) et <strong>React</strong>, déployés sur <strong>Vercel</strong>.
+        Tout tient dans les paliers gratuits.
+      </p>
+
+      <div class="note caution">
+        <strong>Ce que ce choix coûte, en toute honnêteté.</strong> Faire évoluer
+        une règle métier demande de comprendre du SQL — un outil no-code aurait
+        été repris par n'importe qui. C'est le prix des garanties, et il est
+        assumé : sur un produit dont la raison d'être est de supprimer les
+        conflits d'horaires, l'intégrité n'était pas négociable.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. Roadmap ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Déroulé</span>
+      <h2>Comment nous avons procédé</h2>
+    </div>
+
+    <div class="stack-lg">
+      <p>
+        Une règle a guidé l'ordre : <strong>construire d'abord ce qui est coûteux
+        à corriger plus tard</strong>. Une erreur dans le schéma de données
+        contamine tout ce qui est bâti au-dessus ; une interface se refait en une
+        journée. La base a donc été terminée et vérifiée avant la première ligne
+        d'interface.
+      </p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Étape</th>
+              <th scope="col">Contenu</th>
+              <th scope="col">État</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Cadrage</td><td>Onze décisions arbitrées avec vous</td><td class="n">Livré</td></tr>
+            <tr><td>Fondations</td><td>14 migrations, 18 vérifications</td><td class="n">Livré</td></tr>
+            <tr><td>Application</td><td>Parcours membre et parcours gérant</td><td class="n">Livré</td></tr>
+            <tr><td>Mise en ligne</td><td>Déploiement automatique à chaque modification</td><td class="n">Livré</td></tr>
+            <tr><td>Livrables</td><td>Roadmap, stack, pistes d'évolution</td><td class="n">Livré</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note caution">
+        <strong>Deux points restent ouverts</strong>, et il est plus honnête de
+        les nommer. L'affichage mobile a été validé en navigateur mais pas sur un
+        téléphone physique. Et deux réglages de sécurité — confirmation d'email,
+        détection des mots de passe compromis — sont désactivés pour fluidifier
+        la démonstration ; ils sont à réactiver avant tout usage réel.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. Upsell ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">La suite</span>
+      <h2>Ce qui mérite d'être construit ensuite</h2>
+    </div>
+
+    <div class="stack-lg">
+      <p class="small">
+        Les montants s'appuient sur votre grille réelle — 39 €/mois pour
+        20 crédits, packs à 15 / 25 / 45 €. Les volumes, eux, sont des hypothèses
+        explicitement posées : Pacity n'a pas encore de données d'usage. Ce sont
+        des ordres de grandeur destinés à prioriser, pas des prévisions.
+      </p>
+
+      <div>
+        <div class="item">
+          <span class="rank">1</span>
+          <h3>Annulation en autonomie</h3>
+          <span class="effort">~1 jour</span>
+          <div class="detail">
+            <p>
+              Le membre annule lui-même jusqu'à une heure avant, et récupère ses
+              crédits. Au-delà, ils sont perdus — ce qui dissuade de bloquer une
+              salle « au cas où ». Supprime la seule friction structurelle du
+              produit et vous retire du chemin critique.
+            </p>
+            <p><span class="figure">≈ 1 h 15 de gérant récupérée / mois</span></p>
+          </div>
+        </div>
+
+        <div class="item">
+          <span class="rank">2</span>
+          <h3>Paiement réel</h3>
+          <span class="effort">~2 jours</span>
+          <div class="detail">
+            <p>
+              L'architecture est <strong>déjà prête</strong> : tout encaissement
+              passe par une fonction unique, conçue pour être rejouable sans
+              jamais créditer deux fois. Il ne manque que la couche de paiement.
+              Un membre à court de crédits un dimanche soir n'attend plus le
+              lundi.
+            </p>
+            <p><span class="figure">≈ 250 €/mois encaissés sans intervention</span></p>
+          </div>
+        </div>
+
+        <div class="item">
+          <span class="rank">3</span>
+          <h3>Rapports d'occupation</h3>
+          <span class="effort">~3 jours</span>
+          <div class="detail">
+            <p>
+              Taux d'occupation par salle, par créneau et par jour. Toutes les
+              données existent déjà — le registre enregistre tout depuis le
+              premier jour. Si la Large Room tourne à 20 %, la vraie question
+              n'est pas d'en ouvrir une seconde : c'est d'en baisser le tarif en
+              heures creuses.
+            </p>
+            <p><span class="figure">Conditionne toute décision de tarification</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Point de décision.</strong> Les trois chantiers ci-dessus se
+        justifient sans données. Après eux, il faut regarder les chiffres
+        d'usage : selon que Pacity attire surtout des freelances ou des équipes,
+        la priorité bascule entre les réservations récurrentes et les comptes
+        entreprise.
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Ensuite</th>
+              <th scope="col">Ce que ça débloque</th>
+              <th scope="col">Effort</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Notifications de rappel</td><td>Une salle réservée puis désertée est perdue pour tout le monde</td><td class="n">~2 j</td></tr>
+            <tr><td>Réservations récurrentes</td><td>Une équipe dont le rituel vit dans l'outil n'en ressort plus</td><td class="n">~3 j</td></tr>
+            <tr><td>Comptes entreprise</td><td>Facturation unique et budget partagé — le levier B2B du coworking</td><td class="n">~5 j</td></tr>
+            <tr><td>Check-in par QR code</td><td>Libère automatiquement les créneaux non honorés</td><td class="n">~4 j</td></tr>
+            <tr><td>Photos gérées par vous</td><td>Changer une photo sans passer par un développeur</td><td class="n">~0,5 j</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. Démo ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">À vous</span>
+      <h2>Essayer maintenant</h2>
+    </div>
+
+    <div class="stack-lg">
+      <p>
+        Trois comptes de démonstration, mot de passe commun
+        <span class="num">Pacity2026!</span>
+      </p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Compte</th>
+              <th scope="col">Rôle</th>
+              <th scope="col">À observer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="num">sophie@pacity.fr</td>
+              <td>Nomad, 0 crédit</td>
+              <td>Ne peut rien réserver — puis achète un pack et réserve</td>
+            </tr>
+            <tr>
+              <td class="num">pierre@pacity.fr</td>
+              <td>Full Time</td>
+              <td>Voit « Occupé » sans jamais savoir qui occupe</td>
+            </tr>
+            <tr>
+              <td class="num">mathieu@pacity.fr</td>
+              <td>Gérant</td>
+              <td>Voit tous les noms, annule, ferme une salle</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card flag-warm">
+        <h3>Le parcours le plus parlant</h3>
+        <p>
+          Connectez-vous en <strong>Sophie</strong>, constatez qu'aucune
+          réservation n'est possible, achetez un pack, réservez. Puis repassez en
+          <strong>Mathieu</strong> pour annuler cette réservation — et regardez le
+          solde de Sophie remonter.
+        </p>
+      </div>
+
+      <div class="masthead-links">
+        <a class="chip live" href="https://pacity-mvp.vercel.app">Ouvrir l'application</a>
+        <a class="chip" href="https://github.com/phazdev/pacity-mvp">Lire le code</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="small">Pacity — dossier de lancement et d'évolution</span>
+    <span class="eyebrow">Supabase · React · Vercel</span>
+  </footer>
+
+</div>
