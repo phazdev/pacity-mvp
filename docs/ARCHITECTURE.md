@@ -159,14 +159,29 @@ valeur change. `NULL` est autorisé — une salle créée sans photo affiche un
 aplat neutre plutôt qu'une image cassée.
 
 Les sources sont livrées dans `Photos/` et les versions optimisées dans
-`public/rooms/` (688 Ko au total, chargement différé). Leurs formats restent
+`public/rooms/` (417 Ko au total, chargement différé). Leurs formats restent
 hétérogènes — 1200×825 paysage pour la Medium Room, 960×1200 **portrait** pour
 le Phone Booth — d'où un ratio imposé avec `object-cover` : on recadre
 proprement au lieu de déformer.
 
-> **Le script d'optimisation ne doit jamais agrandir.** `sips -Z 1200` upscale
-> les images plus petites que la cible, ce qui dégrade *et* alourdit. La boucle
-> teste donc la dimension maximale et ne redimensionne que si elle dépasse.
+Commande d'optimisation, à rejouer si une source change :
+
+```bash
+magick "Photos/<Salle>.jpg" -auto-orient -resize '1200x1200>' \
+  -strip -interlace Plane -sampling-factor 4:2:0 -quality 72 \
+  -colorspace sRGB "public/rooms/<salle>.jpg"
+```
+
+Trois détails comptent. **Le `>` dans `1200x1200>`** n'autorise que la
+réduction : sans lui, une source plus petite serait agrandie, ce qui dégrade
+l'image *et* l'alourdit. **1200 px** est le double de la largeur d'affichage
+(~540 px sur la liste des salles), donc le minimum pour rester net sur écran
+retina. **Qualité 72** est le point où la courbe poids/qualité s'infléchit :
+au-delà, le poids grimpe sans gain visible.
+
+> L'outil natif macOS `sips` a d'abord été utilisé, puis abandonné : il agrandit
+> les images plus petites que la cible et compresse nettement moins bien.
+> Le passage à ImageMagick a réduit le total de **38 %** à dimensions égales.
 
 La page d'une salle utilise une **vignette** et non une bannière pleine
 largeur. Ce n'est plus une question de résolution : c'est pour qu'on atteigne

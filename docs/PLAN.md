@@ -199,9 +199,14 @@ Migration `14_room_images` : colonne `rooms.image_url`, générique pour accepte
 plus tard une URL Supabase Storage sans changer le schéma (voir
 `ARCHITECTURE.md`).
 
-Sources dans `Photos/`, optimisées vers `public/rooms/` — **sans agrandissement** :
-`sips -Z` upscale les images plus petites que la cible, ce qui dégrade *et*
-alourdit. Total : 688 Ko pour les quatre, chargées en `loading="lazy"`.
+Sources dans `Photos/`, optimisées vers `public/rooms/` avec ImageMagick —
+**417 Ko** pour les quatre, en chargement différé. La commande exacte est dans
+[`ARCHITECTURE.md`](ARCHITECTURE.md).
+
+`sips` (natif macOS) a d'abord servi, puis a été abandonné pour deux raisons :
+il agrandit les images plus petites que la cible, et il compresse mal. Le
+passage à ImageMagick a fait **−38 %** à dimensions identiques (680 → 417 Ko),
+la Large Room passant de 270 à 151 Ko.
 
 Affichage : photo en tête de carte sur la liste des salles, **vignette** sur la
 page de réservation — pour atteindre la grille sans faire défiler une grande
