@@ -10,9 +10,16 @@ Suivi détaillé dans [`docs/PLAN.md`](docs/PLAN.md).
 
 ## En ligne
 
-**https://pacity-mvp.vercel.app**
+| | |
+| :--- | :--- |
+| Application | **https://pacity-mvp.vercel.app** |
+| Dépôt | **https://github.com/phazdev/pacity-mvp** |
 
-Projet Vercel `pacity-mvp`, team PHAZDEV. Redéployer après modification :
+Le projet Vercel `pacity-mvp` (team PHAZDEV) est lié au dépôt GitHub :
+**tout `git push` sur `main` déclenche un déploiement en production.**
+Aucune commande de déploiement à lancer.
+
+Pour forcer un déploiement sans passer par un commit :
 
 ```bash
 npm run build && npx vercel deploy --prod --yes
