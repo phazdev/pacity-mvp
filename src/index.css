@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Pacity — direction « chaleureux et soigné ».
+   Pacity se présente comme un cadre sympa et bienveillant : on évite le
+   gris SaaS. Fond sable, encre chaude, accent terracotta.
+   ------------------------------------------------------------------ */
+@theme {
+  --color-sand:        #faf7f2;
+  --color-surface:     #ffffff;
+  --color-surface-alt: #f4efe7;
+
+  --color-ink:         #241f1a;
+  --color-ink-soft:    #6d6459;
+  --color-ink-faint:   #9c9287;
+
+  --color-line:        #e8e0d5;
+  --color-line-strong: #d6cabb;
+
+  --color-accent:       #c05f3c;
+  --color-accent-hover: #a54c2d;
+  --color-accent-soft:  #f8ebe4;
+  --color-accent-line:  #e6c3b2;
+
+  --color-leaf:      #3f7d5c;
+  --color-leaf-soft: #e6f0ea;
+  --color-amber:     #a8761f;
+  --color-amber-soft:#fbf0d9;
+  --color-rust:      #a8392b;
+  --color-rust-soft: #f9e6e3;
+
+  --font-sans: "Inter var", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-xl2: 1.25rem;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  background-color: var(--color-sand);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hachures des créneaux fermés administrativement */
+.hatched {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--color-amber-soft) 0px,
+    var(--color-amber-soft) 6px,
+    #f3e3c4 6px,
+    #f3e3c4 12px
+  );
+}
+
+/* Focus visible cohérent sur toute l'app */
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@keyframes pacity-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+.animate-in { animation: pacity-fade-in 0.18s ease-out; }

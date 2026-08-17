@@ -1,0 +1,18 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.vite/
+.vercel
+
+# Secrets et configuration locale.
+# .env.example est volontairement suivi : il documente les variables
+# attendues sans contenir de valeur sensible.
+.env
+.env.local
+.env*.local
+.env.production
+!.env.example
+
+# Réglages Claude Code propres à la machine
+.claude/settings.local.json
