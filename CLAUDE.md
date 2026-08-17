@@ -13,10 +13,20 @@ Brief client dans `brief.md`, complément d'architecture initial dans `complemen
 | `docs/REALTIME.md` | Pourquoi la grille passe par la table témoin `room_schedule_events` et pas par un abonnement à `bookings`. À lire avant de toucher aux abonnements |
 | `README.md` | Comptes de démo, opérations courantes |
 
-## Stack
+## Stack et environnements
 
 Supabase (PostgreSQL + Auth + RLS) · React + Vite + TypeScript + Tailwind.
-Projet Supabase `vujzhlylcwpnqpidjfyd`, piloté via le MCP Supabase du compte.
+
+| | |
+| :--- | :--- |
+| Supabase | `vujzhlylcwpnqpidjfyd`, piloté via le MCP Supabase du compte |
+| En ligne | https://pacity-mvp.vercel.app (team Vercel PHAZDEV) |
+| Redéployer | `npm run build && npx vercel deploy --prod --yes` |
+| Dépôt git | Initialisé et commité en local. **Pas encore poussé sur GitHub** |
+
+Le MCP Vercel ne convient pas pour déployer ce projet : il exige de transmettre
+le contenu de tous les fichiers dans l'appel, et 110 Ko de sources ne passent
+pas. Utiliser le CLI, qui lit le dossier depuis le disque.
 
 ## Règles de travail sur ce projet
 
