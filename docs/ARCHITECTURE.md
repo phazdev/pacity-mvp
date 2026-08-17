@@ -159,14 +159,19 @@ valeur change. `NULL` est autorisé — une salle créée sans photo affiche un
 aplat neutre plutôt qu'une image cassée.
 
 Les sources sont livrées dans `Photos/` et les versions optimisées dans
-`public/rooms/`. Elles ont des formats très hétérogènes (500×496 carré pour la
-Medium Room, 1200×1500 portrait pour le Phone Booth), d'où un ratio imposé
-avec `object-cover` : on recadre proprement au lieu de déformer.
+`public/rooms/` (688 Ko au total, chargement différé). Leurs formats restent
+hétérogènes — 1200×825 paysage pour la Medium Room, 960×1200 **portrait** pour
+le Phone Booth — d'où un ratio imposé avec `object-cover` : on recadre
+proprement au lieu de déformer.
 
-> ⚠️ **La photo de la Medium Room ne fait que 500 px de large.** C'est
-> pourquoi la page d'une salle utilise une vignette et non une bannière
-> pleine largeur : celle-ci l'agrandissait 2,2×, avec un flou visible.
-> Une source plus grande permettrait un traitement plus généreux.
+> **Le script d'optimisation ne doit jamais agrandir.** `sips -Z 1200` upscale
+> les images plus petites que la cible, ce qui dégrade *et* alourdit. La boucle
+> teste donc la dimension maximale et ne redimensionne que si elle dépasse.
+
+La page d'une salle utilise une **vignette** et non une bannière pleine
+largeur. Ce n'est plus une question de résolution : c'est pour qu'on atteigne
+la grille de réservation sans faire défiler une grande image, en particulier
+sur mobile.
 
 Le choix de servir les images depuis l'application plutôt que depuis Supabase
 Storage est **assumé pour le MVP** : zéro infrastructure supplémentaire, mais

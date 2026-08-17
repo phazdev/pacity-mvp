@@ -200,12 +200,16 @@ plus tard une URL Supabase Storage sans changer le schéma (voir
 `ARCHITECTURE.md`).
 
 Sources dans `Photos/`, optimisées vers `public/rooms/` — **sans agrandissement** :
-`sips -Z` upscalait la Medium Room de 500 à 1200 px et l'alourdissait au passage
-(56 Ko → 176 Ko). Total : 644 Ko pour les quatre, chargées en `loading="lazy"`.
+`sips -Z` upscale les images plus petites que la cible, ce qui dégrade *et*
+alourdit. Total : 688 Ko pour les quatre, chargées en `loading="lazy"`.
 
 Affichage : photo en tête de carte sur la liste des salles, **vignette** sur la
-page de réservation. La bannière pleine largeur initiale agrandissait la Medium
-Room 2,2× (500 px de source pour 1104 px affichés) — visiblement floue.
+page de réservation — pour atteindre la grille sans faire défiler une grande
+image, surtout sur mobile.
+
+> La Medium Room a été remplacée par une source en 1600×1100 (contre 500×496
+> au départ, qui obligeait à agrandir 2,2× et rendait la bannière floue).
+> Toutes les sources font désormais au moins 960 px de large.
 
 ### Dépôt git ✅ — non poussé
 
