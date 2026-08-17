@@ -149,6 +149,30 @@ la table `bookings`.
 
 ---
 
+## Photos de salle
+
+`rooms.image_url` accepte indifféremment un **chemin relatif** servi par
+l'application (`/rooms/medium-room.jpg`, ce qu'on fait aujourd'hui) ou une
+**URL absolue**. Le jour où le gérant pourra téléverser ses propres photos via
+Supabase Storage, aucune migration de schéma ne sera nécessaire : seule la
+valeur change. `NULL` est autorisé — une salle créée sans photo affiche un
+aplat neutre plutôt qu'une image cassée.
+
+Les sources sont livrées dans `Photos/` et les versions optimisées dans
+`public/rooms/`. Elles ont des formats très hétérogènes (500×496 carré pour la
+Medium Room, 1200×1500 portrait pour le Phone Booth), d'où un ratio imposé
+avec `object-cover` : on recadre proprement au lieu de déformer.
+
+> ⚠️ **La photo de la Medium Room ne fait que 500 px de large.** C'est
+> pourquoi la page d'une salle utilise une vignette et non une bannière
+> pleine largeur : celle-ci l'agrandissait 2,2×, avec un flou visible.
+> Une source plus grande permettrait un traitement plus généreux.
+
+Le choix de servir les images depuis l'application plutôt que depuis Supabase
+Storage est **assumé pour le MVP** : zéro infrastructure supplémentaire, mais
+changer une photo impose un redéploiement. Le passage à Storage — qui rendrait
+la gestion des photos autonome pour le gérant — est listé en piste d'upsell.
+
 ## Tarifs
 
 | Produit | Crédits | Prix | €/crédit |

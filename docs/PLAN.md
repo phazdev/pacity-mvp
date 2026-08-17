@@ -193,6 +193,34 @@ durées correctement plafonnées, alerte de solde insuffisant lisible.
 
 ---
 
+### Photos de salle ✅
+
+Migration `14_room_images` : colonne `rooms.image_url`, générique pour accepter
+plus tard une URL Supabase Storage sans changer le schéma (voir
+`ARCHITECTURE.md`).
+
+Sources dans `Photos/`, optimisées vers `public/rooms/` — **sans agrandissement** :
+`sips -Z` upscalait la Medium Room de 500 à 1200 px et l'alourdissait au passage
+(56 Ko → 176 Ko). Total : 644 Ko pour les quatre, chargées en `loading="lazy"`.
+
+Affichage : photo en tête de carte sur la liste des salles, **vignette** sur la
+page de réservation. La bannière pleine largeur initiale agrandissait la Medium
+Room 2,2× (500 px de source pour 1104 px affichés) — visiblement floue.
+
+### Dépôt git ✅ — non poussé
+
+Dépôt initialisé, premier commit prêt (66 fichiers). `.env.local`,
+`.env.production` et `.vercel` sont exclus ; `.env.example` est suivi
+volontairement.
+
+**Pas encore poussé sur GitHub** : ni `gh`, ni clé SSH, ni Homebrew sur la
+machine, et le connecteur GitHub n'expose pas d'outils dans la session.
+
+### Reste à faire
+
+- [ ] Valider le responsive sur un appareil réel
+- [ ] Pousser le dépôt sur GitHub
+
 ## Phase 3 — Livrables Discovery & Upsell ⬜
 
 20 % de la note du cas. Un artifact web partageable regroupant :
